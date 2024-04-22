@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  </head>
+  <body>
+    <h1>deutschland email scrapper verbsion demo</h1>
+    <label for="city">enter city</label>
+    <select name="" id="">
+        <option value="Munich">munich</option>
+        <option value="Berlin">Berlin</option>
+        <option value="Frankfurt">Frankfurt</option>
+    </select>
+                <button > get emails</button>
+                <button > stop</button>
+    <div>
+      <h1>emails :</h1>
+      <ul class="email-list">
+        <li></li>
+      </ul>
+    </div>
+
+    <script>
+      const socket = io();
+
+      socket.on("connect", () => {
+        console.log("Connected to server");
+      });
+      socket.on("disconnect",()=>{
+        console.log("disconnect")
+        socket.emit("leave")
+      })
+      socket.on("getEmail",(email)=>{
+        console.log(email)
+        const emailElement=document.createElement("li")
+        emailElement.append(email)
+        console.log(emailElement)
+        document.querySelector(".email-list").append(emailElement)
+      })
+
+      document.querySelectorAll("button")[0].onclick=async()=>{
+        try{
+                const city=document.querySelector("select").value
+                const postRequest=await fetch("http://127.0.0.1:5000/email/"+city,{
+                    method:"post"
+                })
+        }catch(err){
+            console.log(err)
+        }
+      }
+      document.querySelectorAll("button")[1].onclick=async()=>{
+        try{
+                const city=document.querySelector("select").value
+                const postRequest=await fetch("http://127.0.0.1:5000/stop/",{
+                  method:"post"
+                })
+                document.querySelector(".email-list").innerHTML=""
+        }catch(err){
+            console.log(err)
+        }
+      }
+      
+    </script>
+  </body>
+</html>
