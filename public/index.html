@@ -24,7 +24,7 @@
     </div>
 
     <script>
-      const socket = io();
+      const socket = io('https://email-hotel.onrender.com/');
 
       socket.on("connect", () => {
         console.log("Connected to server");
@@ -44,7 +44,7 @@
       document.querySelectorAll("button")[0].onclick=async()=>{
         try{
                 const city=document.querySelector("select").value
-                const postRequest=await fetch("http://127.0.0.1:5000/email/"+city,{
+                const postRequest=await fetch("https://email-hotel.onrender.com/email/"+city,{
                     method:"post"
                 })
         }catch(err){
@@ -54,7 +54,7 @@
       document.querySelectorAll("button")[1].onclick=async()=>{
         try{
                 const city=document.querySelector("select").value
-                const postRequest=await fetch("http://127.0.0.1:5000/stop/",{
+                const postRequest=await fetch("https://email-hotel.onrender.com/stop/",{
                   method:"post"
                 })
                 document.querySelector(".email-list").innerHTML=""
